@@ -29,10 +29,11 @@ packageTask.getHandler = function (grunt) {
             'include_time': true,
             'include_version': true,
             'package_folder': './',
+            'package_file_folder': './',
             'include_files': []
         });
 
-        var pkg = JSON.parse(fs.readFileSync(path.resolve(options.package_folder + '/package.json'), "utf8"));
+        var pkg = JSON.parse(fs.readFileSync(path.resolve(options.package_file_folder + '/package.json'), "utf8"));
 
         var dir = new tmp.Dir();
         var done = this.async();
@@ -58,7 +59,7 @@ packageTask.getHandler = function (grunt) {
             var install_location = dir.path;
             var zip_path = install_location + '/' + archive_name + '.zip';
 
-            npm.commands.install(install_location, options.package_folder, function () {
+            npm.commands.install(install_location, options.package_file_folder, function () {
 
                 var output = fs.createWriteStream(zip_path);
                 var zipArchive = archive('zip');
